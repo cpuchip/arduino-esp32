@@ -50,6 +50,7 @@ public:
     _cluster_list = cluster_list;
   }
 
+  void setTCDistributedKey(uint8_t *key);
   void setVersion(uint8_t version);
   uint8_t getEndpoint() {
     return _endpoint;

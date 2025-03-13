@@ -91,10 +91,16 @@ void setup() {
   Serial.println("Adding ZigbeeLight endpoint to Zigbee Core");
   Zigbee.addEndpoint(&zbDimmableLight);
 
-  // update _ep_config with .app_device_version = 1 for Hue support
+  // Needed to support a bridge like Hue
+  // update _ep_config with .app_device_version = 1
   zbDimmableLight.setVersion(1);
   // Set power source to mains to match this being a router
   zbDimmableLight.setPowerSource(ZB_POWER_SOURCE_MAINS);
+  // Set a custom Trust Center Key for the Zigbee coordinator
+  uint8_t secure_trust_center_key[] = {
+    0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF
+  };
+  zbDimmableLight.setTCDistributedKey(secure_trust_center_key);
 
   // When all EPs are registered, start Zigbee in End Device mode
   if (!Zigbee.begin(role)) {

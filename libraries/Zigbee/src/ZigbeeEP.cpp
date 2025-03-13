@@ -28,6 +28,11 @@ ZigbeeEP::ZigbeeEP(uint8_t endpoint) {
   }
 }
 
+void ZigbeeEP::setTCDistributedKey(uint8_t *key) {
+  esp_zb_enable_joining_to_distributed(true);
+  esp_zb_secur_TC_standard_distributed_key_set(key);
+}
+
 void ZigbeeEP::setVersion(uint8_t version) {
   _ep_config.app_device_version = version;
 }
